@@ -2,11 +2,11 @@
 
 import { useRouter, useParams } from "next/navigation";
 import { useQuery } from "@tanstack/react-query";
-import { fetchNoteById } from "../../../../../lib/api/clientApi";
-import Modal from "../../../../../components/Modal/Modal";
+import { fetchNoteById } from "../../../../lib/api/clientApi";
+import Modal from "../../../../components/Modal/Modal";
 import styles from "./NoteDetails.module.css";
 
-export default function NoteDetailsClient() {
+export default function NotePreviewClient() {
   const router = useRouter();
   const { id } = useParams<{ id: string }>();
 
@@ -16,7 +16,7 @@ export default function NoteDetailsClient() {
     isError,
   } = useQuery({
     queryKey: ["note", id],
-    queryFn: () => fetchNoteById(id),
+    queryFn: () => fetchNoteById(id as string),
     refetchOnMount: false,
   });
 

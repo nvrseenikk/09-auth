@@ -6,12 +6,12 @@ import { useDebouncedCallback } from "use-debounce";
 import { Toaster } from "react-hot-toast";
 import Link from "next/link";
 
-import SearchBox from "../../../../../../components/SearchBox/SearchBox";
-import Pagination from "../../../../../../components/Pagination/Pagination";
-import NoteList from "../../../../../../components/NoteList/NoteList";
-import Loader from "../../../../../../components/Loader/Loader";
-import ErrorMessage from "../../../../../../components/ErrorMessage/ErrorMessage";
-import { fetchNotes } from "../../../../../../lib/api/clientApi";
+import SearchBox from "../../../../../components/SearchBox/SearchBox";
+import Pagination from "../../../../../components/Pagination/Pagination";
+import NoteList from "../../../../../components/NoteList/NoteList";
+import Loader from "../../../../../components/Loader/Loader";
+import ErrorMessage from "../../../../../components/ErrorMessage/ErrorMessage";
+import { fetchNotes } from "../../../../../lib/api/clientApi";
 
 import styles from "./NotesPage.module.css";
 

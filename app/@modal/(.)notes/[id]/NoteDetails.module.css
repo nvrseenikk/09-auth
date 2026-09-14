@@ -1,0 +1,26 @@
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.item {
+  padding: 24px;
+}
+
+.header {
+  margin-bottom: 12px;
+}
+
+.tag {
+  color: #888;
+  margin-bottom: 12px;
+}
+
+.content {
+  margin-bottom: 12px;
+}
+
+.date {
+  color: #888;
+  font-size: 14px;
+}
