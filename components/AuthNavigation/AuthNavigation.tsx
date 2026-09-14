@@ -1,11 +1,10 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "../../lib/store/authStore";
 import { logout } from "../../lib/api/clientApi";
 import styles from "./AuthNavigation.module.css";
-
-
 
 export default function AuthNavigation() {
   const router = useRouter();
@@ -21,9 +20,9 @@ export default function AuthNavigation() {
     return (
       <>
         <li className={styles.navigationItem}>
-          <a href="/profile" className={styles.navigationLink}>
+          <Link href="/profile" className={styles.navigationLink}>
             Profile
-          </a>
+          </Link>
         </li>
         <li className={styles.navigationItem}>
           <p className={styles.userEmail}>{user?.email}</p>
@@ -34,17 +33,18 @@ export default function AuthNavigation() {
       </>
     );
   }
+
   return (
     <>
       <li className={styles.navigationItem}>
-        <a href="/sign-in" className={styles.navigationLink}>
+        <Link href="/sign-in" className={styles.navigationLink}>
           Login
-        </a>
+        </Link>
       </li>
       <li className={styles.navigationItem}>
-        <a href="/sign-up" className={styles.navigationLink}>
+        <Link href="/sign-up" className={styles.navigationLink}>
           Sign up
-        </a>
+        </Link>
       </li>
     </>
   );

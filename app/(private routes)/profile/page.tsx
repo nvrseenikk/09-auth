@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import Image from "next/image";
 import { getMe } from "../../../lib/api/serverApi";
 import styles from "./ProfilePage.module.css";
@@ -16,11 +17,10 @@ export default async function ProfilePage() {
       <div className={styles.profileCard}>
         <div className={styles.header}>
           <h1 className={styles.formTitle}>Profile Page</h1>
-          <a href="/profile/edit" className={styles.editProfileButton}>
+          <Link href="/profile/edit" className={styles.editProfileButton}>
             Edit Profile
-          </a>
+          </Link>
         </div>
-
         <div className={styles.avatarWrapper}>
           <Image
             src={user.avatar}
@@ -30,7 +30,6 @@ export default async function ProfilePage() {
             className={styles.avatar}
           />
         </div>
-
         <div className={styles.profileInfo}>
           <p>Username: {user.username}</p>
           <p>Email: {user.email}</p>
