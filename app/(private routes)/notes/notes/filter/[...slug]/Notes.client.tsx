@@ -5,12 +5,14 @@ import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { useDebouncedCallback } from "use-debounce";
 import { Toaster } from "react-hot-toast";
 import Link from "next/link";
-import SearchBox from "../../../../components/SearchBox/SearchBox";
-import Pagination from "../../../../components/Pagination/Pagination";
-import NoteList from "../../../../components/NoteList/NoteList";
-import Loader from "../../../../components/Loader/Loader";
-import ErrorMessage from "../../../../components/ErrorMessage/ErrorMessage";
-import { fetchNotes } from "../../../../lib/api";
+
+import SearchBox from "../../../../../../components/SearchBox/SearchBox";
+import Pagination from "../../../../../../components/Pagination/Pagination";
+import NoteList from "../../../../../../components/NoteList/NoteList";
+import Loader from "../../../../../../components/Loader/Loader";
+import ErrorMessage from "../../../../../../components/ErrorMessage/ErrorMessage";
+import { fetchNotes } from "../../../../../../lib/api/clientApi";
+
 import styles from "./NotesPage.module.css";
 
 const PER_PAGE = 12;
@@ -47,6 +49,7 @@ export default function NotesClient({ tag }: NotesClientProps) {
   return (
     <div className={styles.app}>
       <Toaster position="top-right" />
+
       <header className={styles.toolbar}>
         <SearchBox value={searchValue} onChange={handleInputChange} />
 
