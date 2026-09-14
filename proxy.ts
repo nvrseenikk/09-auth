@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { cookies } from "next/headers";
+import { parse, serialize } from "cookie";
 import { checkSession } from "./lib/api/serverApi";
 
 const privateRoutes = ["/profile", "/notes"];
@@ -22,33 +23,36 @@ export async function proxy(request: NextRequest) {
 
   let isAuthenticated = Boolean(accessToken);
 
+  // Если accessToken нет, но есть refreshToken — пробуем обновить сессию
   if (!accessToken && refreshToken) {
     const response = await checkSession();
-    const setCookie = response.headers["set-cookie"];
+    const setCookieHeader = response.headers["set-cookie"];
 
-    if (setCookie) {
-      const cookieArray = Array.isArray(setCookie) ? setCookie : [setCookie];
-      const nextResponse = isPrivateRoute
-        ? NextResponse.next()
-        : NextResponse.next();
-
-      for (const cookieStr of cookieArray) {
-        const [cookiePair] = cookieStr.split(";");
-        const [name, value] = cookiePair.split("=");
-        nextResponse.cookies.set(name, value);
-      }
+    if (setCookieHeader) {
+      const cookieArray = Array.isArray(setCookieHeader)
+        ? setCookieHeader
+        : [setCookieHeader];
 
       isAuthenticated = true;
 
-      if (isPublicRoute) {
-        const homeUrl = new URL("/", request.url);
-        const redirectResponse = NextResponse.redirect(homeUrl);
-        for (const cookieStr of cookieArray) {
-          const [cookiePair] = cookieStr.split(";");
-          const [name, value] = cookiePair.split("=");
-          redirectResponse.cookies.set(name, value);
-        }
-        return redirectResponse;
+      const targetUrl = isPublicRoute ? new URL("/", request.url) : request.url;
+      const nextResponse = isPublicRoute
+        ? NextResponse.redirect(targetUrl)
+        : NextResponse.next();
+
+      for (const cookieStr of cookieArray) {
+        const parsed = parse(cookieStr);
+        const [name, value] = Object.entries(parsed)[0];
+
+        nextResponse.headers.append(
+          "Set-Cookie",
+          serialize(name, value, {
+            path: "/",
+            httpOnly: true,
+            secure: true,
+            sameSite: "none",
+          }),
+        );
       }
 
       return nextResponse;
